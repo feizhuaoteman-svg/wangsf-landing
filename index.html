@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>王师傅尊享出行 - 零跑D99旗舰MPV包车服务</title>
+  <style>
+    :root {
+      --bg: #0D0D0D;
+      --card-bg: #1A1A1A;
+      --gold: #C9A96E;
+      --gold-light: #D4AF37;
+      --text: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --text-placeholder: #606060;
+      --divider: #2D2D2D;
+      --tag-bg: #2A2015;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      background: #000;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    /* ========== Top Navigation ========== */
+    .top-nav {
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px 10px;
+    }
+
+    .brand-icon {
+      width: 32px; height: 32px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.5px;
+    }
+
+    .tab-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .tab-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 10px 0 0;
+      cursor: pointer;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tab-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-item.active .tab-label {
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 13.5px;
+    }
+
+    .tab-indicator {
+      width: 20px; height: 2.5px;
+      border-radius: 2px;
+      background: transparent;
+      transition: background 0.2s;
+    }
+
+    .tab-item.active .tab-indicator {
+      background: var(--gold);
+    }
+
+    /* ========== Tab Content ========== */
+    .tab-content { display: none; }
+
+    .tab-content.active { display: block; }
+
+    .section {
+      padding: 20px 16px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    /* ========== Hero Banner (Tab1) ========== */
+    .hero-banner {
+      width: 100%;
+      height: 300px;
+      background: var(--card-bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.6;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px 20px;
+      background: linear-gradient(to top, var(--bg) 0%, rgba(13,13,13,0.7) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* ========== Advantages ========== */
+    .adv-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .adv-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 14px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .adv-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .adv-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .adv-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      white-space: pre-line;
+    }
+
+    /* ========== 个人介绍 (Tab1) ========== */
+    .intro-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px 18px;
+      border: 1px solid var(--divider);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    .intro-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .intro-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid var(--gold);
+    }
+
+    .intro-name-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .intro-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .intro-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .intro-tag {
+      font-size: 10px;
+      color: var(--gold);
+      background: var(--tag-bg);
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .intro-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      text-align: justify;
+    }
+
+    .intro-highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .intro-hl {
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .intro-footer {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--divider);
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .intro-qr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .intro-qr img {
+      width: 70px; height: 70px;
+      border-radius: 6px;
+      border: 1px solid var(--gold);
+      object-fit: cover;
+      display: block;
+    }
+
+    .intro-qr-tip {
+      font-size: 10px;
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ========== Vehicle Preview (Tab1) ========== */
+    .vp-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .vp-img {
+      width: 100px; height: 70px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .vp-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .vp-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .vp-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .vp-tag {
+      background: var(--tag-bg);
+      color: var(--gold);
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .vp-detail {
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* ========== Departure Badge ========== */
+    .depart-badge {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .depart-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .depart-info {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .depart-from {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .depart-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .depart-city {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .depart-arrow {
+      font-size: 20px;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .depart-to {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ========== Vehicle Detail (Tab2) ========== */
+    .vd-banner {
+      width: 100%;
+      height: 200px;
+      background: var(--card-bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vd-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+
+    .vd-badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: var(--gold);
+      color: var(--bg);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    /* ========== Param Table ========== */
+    .param-table {
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .param-row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .param-row:last-child { border-bottom: none; }
+
+    .param-label {
+      width: 95px;
+      padding: 14px 10px 14px 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .param-value {
+      flex: 1;
+      padding: 14px 14px 14px 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ========== Feature List ========== */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* ========== 豪华配置卡片 ========== */
+    .feat-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 18px 16px;
+      margin-bottom: 12px;
+      border-left: 2.5px solid var(--gold);
+    }
+
+    .feat-card:last-child { margin-bottom: 0; }
+
+    .feat-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .feat-card-icon {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .feat-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .feat-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-left: 2px;
+    }
+
+    .feat-item:last-child { margin-bottom: 0; }
+
+    .feat-check {
+      color: var(--gold);
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .feat-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .feat-sub {
+      padding-left: 26px;
+      margin-bottom: 6px;
+    }
+
+    .feat-sub-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .feat-highlight {
+      background: var(--tag-bg);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 10px;
+    }
+
+    .feat-highlight-text {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .feat-tags-wrap {
+      margin-top: 4px;
+      padding-left: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .feat-tag {
+      background: rgba(201,169,110,0.12);
+      color: var(--gold);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .feat-bottom-banner {
+      background: linear-gradient(135deg, rgba(201,169,110,0.12) 0%, rgba(201,169,110,0.04) 100%);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .feat-bottom-banner-text {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 600;
+      line-height: 1.6;
+      letter-spacing: 0.5px;
+    }
+
+    /* ========== Pricing (Tab3) ========== */
+    .price-tags {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .price-tag {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 14px 8px;
+      text-align: center;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .price-tag.active {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .price-tag-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .price-tag.active .price-tag-name {
+      color: var(--bg);
+    }
+
+    .price-tag.active .price-tag-desc {
+      color: rgba(13,13,13,0.7);
+    }
+
+    .price-tag-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      white-space: pre-line;
+    }
+
+    /* ========== Price Note ========== */
+    .price-note {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid var(--divider);
+    }
+
+    .price-note-main {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .price-note-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== Service Area ========== */
+    .area-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .area-start {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .area-start-label {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .area-start-city {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .area-cities {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .area-cross {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+    .area-limit {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
+
+    /* ========== Process Steps ========== */
+    .process-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 6px;
+    }
+
+    .process-step {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 12px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--bg);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .step-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      text-align: center;
+    }
+
+    /* ========== Booking Form (Tab4) ========== */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 44px;
+      background: var(--card-bg);
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 0 14px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-placeholder);
+    }
+
+    .form-textarea {
+      height: 80px;
+      padding: 14px;
+      resize: vertical;
+    }
+
+    .form-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .form-option {
+      height: 42px;
+      background: var(--card-bg);
+      border: 1.5px solid transparent;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .form-option.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+      font-weight: 700;
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 48px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--bg);
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 1px;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.2s;
+    }
+
+    .btn-submit:active {
+      opacity: 0.85;
+    }
+
+    .form-privacy {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* ========== Reviews (Tab5) ========== */
+    .review-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .review-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .review-info {
+      flex: 1;
+    }
+
+    .review-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .review-stars {
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .review-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ========== Promise ========== */
+    .promise-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .promise-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .promise-item:last-child { margin-bottom: 0; }
+
+    .promise-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      color: var(--bg);
+      flex-shrink: 0;
+    }
+
+    .promise-text {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    /* ========== Contact ========== */
+    .contact-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .contact-icon img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .contact-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .contact-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .contact-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold);
+      word-break: break-all;
+    }
+
+    .contact-divider {
+      height: 1px;
+      background: var(--divider);
+      margin: 12px 0;
+    }
+
+    .contact-simple {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-simple-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ========== Bottom Bar ========== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg);
+      display: flex;
+      padding: 12px 16px;
+      gap: 12px;
+      align-items: center;
+      z-index: 100;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
+    }
+
+    .btn-phone {
+      flex: 1;
+      height: 44px;
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--gold);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s;
+    }
+
+    .btn-phone:active {
+      background: rgba(201,169,110,0.1);
+    }
+
+    .btn-book {
+      flex: 1;
+      height: 44px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--bg);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.2s;
+    }
+
+    .btn-book:active {
+      opacity: 0.85;
+    }
+
+    /* ========== 预约确认弹窗 ========== */
+    .confirm-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .confirm-modal {
+      background: var(--card-bg);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 340px;
+      padding: 28px 22px 22px;
+      border: 1px solid var(--divider);
+    }
+
+    .confirm-icon {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--tag-bg);
+      margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+    }
+
+    .confirm-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .confirm-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .confirm-summary {
+      background: rgba(201,169,110,0.06);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.8;
+      white-space: pre-line;
+      margin-bottom: 20px;
+      font-family: monospace;
+    }
+
+    .confirm-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .confirm-btn-wechat {
+      width: 100%;
+      height: 48px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #07C160 0%, #06AD56 100%);
+      color: #FFF;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+    }
+
+    .confirm-btn-wechat:active {
+      opacity: 0.85;
+    }
+
+    .confirm-btn-phone {
+      width: 100%;
+      height: 44px;
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--gold);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .confirm-btn-phone:active {
+      background: rgba(201,169,110,0.1);
+    }
+
+    .confirm-close {
+      display: block;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 14px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ========== QR Code ========== */
+    .qr-section {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .qr-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .qr-section-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .qr-img {
+      width: 220px; height: 220px;
+      border-radius: 12px;
+      border: 2px solid var(--gold);
+      display: block;
+      margin: 0 auto 12px;
+    }
+
+    .qr-tip {
+      font-size: 11px;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* ========== Toast ========== */
+    .toast {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(255,255,255,0.95);
+      color: #333;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Top Navigation -->
+    <div class="top-nav">
+      <div class="brand-row">
+        <img class="brand-icon" src="assets/images/brand_logo.png" alt="王师傅尊享出行">
+        <span class="brand-name">王师傅尊享出行</span>
+      </div>
+      <div class="tab-row" id="tabRow">
+        <div class="tab-item active" data-tab="0">
+          <span class="tab-label">首页</span>
+          <div class="tab-indicator"></div>
+        </div>
+        <div class="tab-item" data-tab="1">
+          <span class="tab-label">车辆详情</span>
+          <div class="tab-indicator"></div>
+        </div>
+        <div class="tab-item" data-tab="2">
+          <span class="tab-label">服务价格</span>
+          <div class="tab-indicator"></div>
+        </div>
+        <div class="tab-item" data-tab="3">
+          <span class="tab-label">在线预约</span>
+          <div class="tab-indicator"></div>
+        </div>
+        <div class="tab-item" data-tab="4">
+          <span class="tab-label">口碑联系</span>
+          <div class="tab-indicator"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 1: 首页 -->
+    <div class="tab-content active" data-tab="0">
+      <div class="hero-banner">
+        <img class="hero-img" src="assets/images/car_hero.jpg" alt="零跑D99">
+        <div class="hero-overlay">
+          <div class="hero-title">杭州 · 高端商务包车</div>
+          <div class="hero-sub">零跑D99旗舰MPV · 6/7座 · 江浙沪皖直达</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">为什么选择我们</div>
+        <div class="adv-cards">
+          <div class="adv-card">
+            <div class="adv-icon">🚗</div>
+            <div class="adv-title">旗舰座驾</div>
+            <div class="adv-desc">零跑D99<br>30万级豪华MPV</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">🛡️</div>
+            <div class="adv-title">安心保障</div>
+            <div class="adv-desc">百万保险<br>30年驾龄</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">⭐</div>
+            <div class="adv-title">口碑之选</div>
+            <div class="adv-desc">复购率超90%<br>老客户信赖</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 王师傅个人介绍 -->
+      <div class="section" style="padding-top: 0;">
+        <div class="intro-card">
+          <div class="intro-header">
+            <img class="intro-avatar" src="assets/avatars/avatar_wangshifu.png" alt="王师傅">
+            <div class="intro-name-row">
+              <div class="intro-name">王师傅</div>
+              <div class="intro-tags">
+                <span class="intro-tag">退役军人</span>
+                <span class="intro-tag">部队驾照</span>
+                <span class="intro-tag">150万公里</span>
+              </div>
+            </div>
+            <div class="intro-qr">
+              <img src="assets/images/wechat_qr.jpg" alt="微信二维码">
+              <div class="intro-qr-tip">扫码加微信</div>
+            </div>
+          </div>
+          <div class="intro-text">
+            王师傅为杭州本地人，退役军人部队学习驾照，拥有过硬军事素质和驾驶本领，安全行驶超一百五十万公里，服务于上万客人均获得乘客好评。王师傅常年奔波于江浙沪皖地区，熟悉各地景区及路线，可做为您舒适出行兼职导游和免费路线规划师。
+          </div>
+          <div class="intro-highlights">
+            <div class="intro-hl">🎖️ 退役军人·部队驾照</div>
+            <div class="intro-hl">🛡️ 安全行驶150万+公里</div>
+            <div class="intro-hl">👥 服务上万客人·零差评</div>
+            <div class="intro-hl">🗺️ 江浙沪皖活地图</div>
+          </div>
+          <div class="intro-footer">欢迎您随时预约联系，也预祝您本次到杭州游玩的开心快乐！！！</div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="section-title">您的专属座驾</div>
+        <div class="vp-card" onclick="switchTab(1)">
+          <img class="vp-img" src="assets/images/car_detail.jpg" alt="零跑D99">
+          <div class="vp-info">
+            <div class="vp-name">零跑D99</div>
+            <div class="vp-tags">
+              <span class="vp-tag">7座MPV</span>
+              <span class="vp-tag">纯电四驱</span>
+              <span class="vp-tag">5.28m车长</span>
+            </div>
+            <div class="vp-detail">查看车辆详情 →</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="depart-badge">
+          <div class="depart-icon">📍</div>
+          <div class="depart-info">
+            <div class="depart-from">
+              <div class="depart-label">出发地点</div>
+              <div class="depart-city">杭州市</div>
+            </div>
+            <div class="depart-arrow">→</div>
+          </div>
+          <div class="depart-to">江浙沪皖任一城市</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: 车辆详情 -->
+    <div class="tab-content" data-tab="1">
+      <div class="vd-banner">
+        <img class="vd-img" src="assets/images/car_detail.jpg" alt="��跑D99">
+        <div class="vd-badge">2026款 · 旗舰MPV</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">核心参数</div>
+        <div class="param-table">
+          <div class="param-row"><div class="param-label">车型</div><div class="param-value">零跑D99</div></div>
+          <div class="param-row"><div class="param-label">车身尺寸</div><div class="param-value">5280×1995×1900mm</div></div>
+          <div class="param-row"><div class="param-label">轴距</div><div class="param-value">3110mm</div></div>
+          <div class="param-row"><div class="param-label">座位</div><div class="param-value">2+2+3（7座）/ 6座可选</div></div>
+          <div class="param-row"><div class="param-label">车门</div><div class="param-value">平开门 + 双侧电滑门</div></div>
+          <div class="param-row"><div class="param-label">后备箱</div><div class="param-value">706L / 放倒2890L</div></div>
+          <div class="param-row"><div class="param-label">动力</div><div class="param-value">纯电四驱</div></div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="section-title">豪华配置</div>
+        <div class="feature-list">
+
+          <!-- 一、零重力座椅 -->
+          <div class="feat-card">
+            <div class="feat-card-head">
+              <div class="feat-card-icon">💺</div>
+              <div class="feat-card-title">双独立可旋转零重力座椅</div>
+            </div>
+            <div class="feat-item"><div class="feat-check">✅</div><div class="feat-text">45°迎宾旋转：拓宽通道，方便上下车</div></div>
+            <div class="feat-item"><div class="feat-check">✅</div><div class="feat-text">90°侧向观景：旅途风景尽收眼底</div></div>
+            <div class="feat-item"><div class="feat-check">✅</div><div class="feat-text">180°向后对坐：二排与三排面对面，形成移动会客室，适合短途商务洽谈</div></div>
+            <div class="feat-sub"><div class="feat-sub-text">· 124°零重力姿态 · 加热/通风 · 10点气动按摩 · 4向腰托 · 电动腿托+脚托</div></div>
+            <div class="feat-highlight">
+              <div class="feat-highlight-text">💡 搭配可折叠悬浮商务小桌板，临时办公、放置笔记本电脑十分方便</div>
+            </div>
+          </div>
+
+          <!-- 二、静谧空间 -->
+          <div class="feat-card">
+            <div class="feat-card-head">
+              <div class="feat-card-icon">🔇</div>
+              <div class="feat-card-title">静谧商务空间</div>
+            </div>
+            <div class="feat-item"><div class="feat-check"></div><div class="feat-text">全车11块双层夹胶隔音玻璃 + 全车声学隔音材料</div></div>
+            <div class="feat-sub"><div class="feat-sub-text">高速风噪、路噪抑制优秀，车内交谈不需要大声，接待客户私密性更好</div></div>
+          </div>
+
+          <!-- 三、舒适配套 -->
+          <div class="feat-card">
+            <div class="feat-card-head">
+              <div class="feat-card-icon">🧊</div>
+              <div class="feat-card-title">舒适配套</div>
+            </div>
+            <div class="feat-item"><div class="feat-check"></div><div class="feat-text">11.4L宽温域车载冷暖冰箱，温控范围 -6℃ ~ 50℃</div></div>
+            <div class="feat-sub"><div class="feat-sub-text">冰水、热饮都能存放，接待常备饮品随取随用</div></div>
+          </div>
+
+          <!-- 四、影音娱乐 -->
+          <div class="feat-card">
+            <div class="feat-card-head">
+              <div class="feat-card-icon">🎬</div>
+              <div class="feat-card-title">后排影音娱乐系统</div>
+            </div>
+            <div class="feat-item"><div class="feat-check"></div><div class="feat-text">21.4英寸 3K 后排吸顶娱乐大屏</div></div>
+            <div class="feat-sub"><div class="feat-sub-text">支持投屏、影音、车载KTV功能，搭配USB无线麦克风即可K歌；屏幕电动角度可调，第三排观看视野良好</div></div>
+          </div>
+
+          <!-- 五、智能座舱 -->
+          <div class="feat-card">
+            <div class="feat-card-head">
+              <div class="feat-card-icon">🖥️</div>
+              <div class="feat-card-title">智能座舱交互</div>
+            </div>
+            <div class="feat-item"><div class="feat-check">✅</div><div class="feat-text">五屏联动：17.3英寸中控屏 + 仪表 + 50英寸AR-HUD + 后排控制屏 + 后排娱乐大屏</div></div>
+            <div class="feat-item"><div class="feat-check">✅</div><div class="feat-text">六音区全域语音：二三排乘客直接语音控制座椅、空调、音乐</div></div>
+            <div class="feat-item"><div class="feat-check"></div><div class="feat-text">二三排多种组合模式，可变换休憩空间</div></div>
+            <div class="feat-sub"><div class="feat-sub-text">第三排不是"应急座椅"：配备电动调节、座椅加热、独立扶手、遮阳帘，多人商务出行全员舒适</div></div>
+          </div>
+
+          <!-- 六、底盘悬架 -->
+          <div class="feat-card">
+            <div class="feat-card-head">
+              <div class="feat-card-icon">🏎️</div>
+              <div class="feat-card-title">底盘乘坐质感</div>
+            </div>
+            <div class="feat-item"><div class="feat-check"></div><div class="feat-text">双腔空气悬架 + CDC魔毯减震</div></div>
+            <div class="feat-sub"><div class="feat-sub-text">接待客户过减速带、坑洼路面更平稳；支持车身高低调节，上下车门槛更低，商务仪式感更强</div></div>
+          </div>
+
+          <!-- 七、内饰 -->
+          <div class="feat-card">
+            <div class="feat-card-head">
+              <div class="feat-card-icon">✨</div>
+              <div class="feat-card-title">内饰豪华质感</div>
+            </div>
+            <div class="feat-item"><div class="feat-check"></div><div class="feat-text">大面积软性包覆，法式菱格绗缝真皮</div></div>
+            <div class="feat-item"><div class="feat-check"></div><div class="feat-text">天鹅绒星空顶棚 · 3.9米环形氛围灯</div></div>
+            <div class="feat-sub"><div class="feat-sub-text">内饰风格简约轻奢，不会过度浮夸，适合商务场景</div></div>
+          </div>
+
+          <!-- 底部亮点汇总 -->
+          <div class="feat-bottom-banner">
+            <div class="feat-bottom-banner-text">旋转座椅+小桌板 · 车载冰箱 · 后排娱乐屏(KTV) · 空气悬架 · 天鹅绒顶棚 · 三排电动座椅</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: 服务价格 -->
+    <div class="tab-content" data-tab="2">
+      <div class="section">
+        <div class="section-title">计费方式</div>
+        <div class="price-tags" id="priceTags">
+          <div class="price-tag" data-type="hour">
+            <div class="price-tag-name">按小时租</div>
+            <div class="price-tag-desc">短途接送<br>商务会议</div>
+          </div>
+          <div class="price-tag active" data-type="half">
+            <div class="price-tag-name">半日租(4h)</div>
+            <div class="price-tag-desc">市区多地点<br>商务出行</div>
+          </div>
+          <div class="price-tag" data-type="full">
+            <div class="price-tag-name">全日租(8h)</div>
+            <div class="price-tag-desc">跨城商务<br>全天候服务</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="section-title">参考价格</div>
+        <div class="price-note">
+          <div class="price-note-main">价格根据行程详谈，扫码添加微信获取精准报价</div>
+          <div class="price-note-sub">具体费用受里程、时间、服务类型等因素影响</div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="section-title">服务范围</div>
+        <div class="area-card">
+          <div class="area-start">
+            <span class="area-start-label">📍 出发点</span>
+            <span class="area-start-city">杭州市</span>
+          </div>
+          <div class="area-cities">🌍 覆盖城市：杭州、上海、宁波、苏州、南京、无锡、常州、嘉兴、湖州、绍兴、合肥、芜湖、黄山等江浙沪皖主要城市</div>
+          <div class="area-cross">✅ 支持跨城出行</div>
+          <div class="area-limit">暂不支持江浙沪皖以外地区</div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="section-title">用车流程</div>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">1</div><div class="step-name">在线预约</div></div>
+          <div class="process-step"><div class="step-num">2</div><div class="step-name">确认行程</div></div>
+          <div class="process-step"><div class="step-num">3</div><div class="step-name">按时到达</div></div>
+          <div class="process-step"><div class="step-num">4</div><div class="step-name">满意付款</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 4: 在线预约 -->
+    <div class="tab-content" data-tab="3">
+      <div class="section">
+        <div class="section-title" style="font-size:18px;">在线预约</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;">填写以下信息，我们将尽快与您联系确认</div>
+
+        <form id="bookingForm">
+          <div class="form-group">
+            <label class="form-label">出发地 *</label>
+            <input class="form-input" type="text" value="杭州市" placeholder="请输入出发地" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">目的地 *</label>
+            <input class="form-input" type="text" placeholder="请输入目的地城市" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">用车日期 *</label>
+            <input class="form-input" type="date" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">用车时间 *</label>
+            <input class="form-input" type="time" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">乘车人数 *</label>
+            <select class="form-input" required style="appearance:none;-webkit-appearance:none;">
+              <option value="">请选择人数（1-6人）</option>
+              <option>1人</option><option>2人</option><option>3人</option>
+              <option>4人</option><option>5人</option><option>6人</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">计费方式 *</label>
+            <div class="form-options" id="bookingType">
+              <div class="form-option" data-type="hour">小时租</div>
+              <div class="form-option active" data-type="half">半日租</div>
+              <div class="form-option" data-type="full">全日租</div>
+            </div>
+            <input type="hidden" name="billType" id="billType" value="half">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">联系人 *</label>
+            <input class="form-input" type="text" placeholder="请输入您的姓名" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">手机号 *</label>
+            <input class="form-input" type="tel" placeholder="请输入手机号码" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">备注（选填）</label>
+            <textarea class="form-input form-textarea" placeholder="如有特殊需求请在此说明"></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">提交预约</button>
+          <div class="form-privacy">提交后我们会尽快与您联系确认行程</div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tab 5: 口碑联系 -->
+    <div class="tab-content" data-tab="4">
+      <div class="section">
+        <div class="section-title">客户评价</div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <img class="review-avatar" src="assets/avatars/avatar_zhang.png" alt="张先生">
+            <div class="review-info">
+              <div class="review-name">张先生</div>
+              <div class="review-stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="review-text">第一次约王师傅包车去上海出差，零跑D99真的太舒服了。二排座椅带按摩，一路下来完全不累。王师傅提前到楼下等，服务特别周到。以后出差就认准王师傅了！</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <img class="review-avatar" src="assets/avatars/avatar_li.png" alt="李女士">
+            <div class="review-info">
+              <div class="review-name">李女士</div>
+              <div class="review-stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="review-text">带全家去苏州玩，3个大人2个孩子加行李绰绰有余。王师傅开车特别稳，孩子在后排看天窗看了一路。老人坐在座椅上也不觉得累。下次还约王师傅！</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <img class="review-avatar" src="assets/avatars/avatar_wangzong.png" alt="王总">
+            <div class="review-info">
+              <div class="review-name">王总</div>
+              <div class="review-stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="review-text">合作半年多了，接送客户一直用王师傅的车。零跑D99确实有面子，客户都说这车比埃尔法还舒服。王师傅准时、干净、态度好，强烈推荐！</div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="section-title">服务承诺</div>
+        <div class="promise-card">
+          <div class="promise-item"><div class="promise-check">✓</div><div class="promise-text">正规营运车辆，手续齐全</div></div>
+          <div class="promise-item"><div class="promise-check">✓</div><div class="promise-text">百万商业保险，出行无忧</div></div>
+          <div class="promise-item"><div class="promise-check">✓</div><div class="promise-text">30年驾龄，熟悉江浙沪皖路况</div></div>
+          <div class="promise-item"><div class="promise-check">✓</div><div class="promise-text">全程专属服务，随时响应</div></div>
+          <div class="promise-item"><div class="promise-check">✓</div><div class="promise-text">每客必清洁，车内无异味</div></div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 0;">
+        <div class="section-title">联系方式</div>
+        <div class="contact-card">
+          <div class="contact-row">
+            <div class="contact-icon"><img src="assets/avatars/avatar_wangshifu.png" alt="王师傅"></div>
+            <a class="contact-info" href="tel:13588763992" style="text-decoration:none;display:flex;flex:1;">
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <div class="contact-label">王师傅电话</div>
+                <div class="contact-value">13588763992</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="contact-divider"></div>
+
+          <div class="contact-row">
+            <div class="contact-icon"><img src="assets/avatars/avatar_wangshifu.png" alt="王师傅"></div>
+            <div class="contact-info" onclick="copyWechat()" style="cursor:pointer;">
+              <div class="contact-label">王师傅微信</div>
+              <div class="contact-value">wjj13588763992</div>
+            </div>
+          </div>
+
+          <div class="contact-divider"></div>
+
+          <div class="contact-simple">
+            <div class="contact-icon" style="font-size:18px;display:flex;align-items:center;justify-content:center;">🕐</div>
+            <div class="contact-simple-text">24小时在线</div>
+          </div>
+
+          <div class="contact-divider"></div>
+
+          <div class="contact-simple">
+            <div class="contact-icon" style="font-size:18px;display:flex;align-items:center;justify-content:center;">📍</div>
+            <div class="contact-simple-text">出发地址：杭州市</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 二维码入口 -->
+      <div class="section">
+        <div class="qr-section">
+          <div class="qr-section-title">扫码打开本页面</div>
+          <div class="qr-section-sub">保存或分享此二维码，客户扫码即可查看车辆详情并预约</div>
+          <img class="qr-img" src="assets/images/app_qrcode.png" alt="王师傅尊享出行二维码">
+          <div class="qr-tip">微信 / 支付宝 / 浏览器 均可扫码</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+      <a class="btn-phone" href="tel:13588763992" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">📞 电话咨询</a>
+      <button class="btn-book" onclick="switchTab(3)">立即预约</button>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+    <iframe name="pushFrame" id="pushFrame" style="display:none;width:0;height:0;border:none;"></iframe>
+
+    <!-- 预约确认弹窗 -->
+    <div class="confirm-overlay" id="confirmModal" onclick="closeConfirm()">
+      <div class="confirm-modal" onclick="event.stopPropagation()">
+        <div class="confirm-icon">📋</div>
+        <div class="confirm-title">预约信息确认</div>
+        <div class="confirm-sub">请核对后发送给王师傅</div>
+        <div class="confirm-summary" id="confirmSummary"></div>
+        <div class="confirm-btns">
+          <button class="confirm-btn-wechat" onclick="sendToWechat()">💬 发送预约信息给王师傅微信</button>
+          <a href="tel:13588763992" class="confirm-btn-phone" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">📞 电话预约 13588763992</a>
+        </div>
+        <div class="confirm-close" onclick="closeConfirm()">关闭</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ServerChan SendKey - replace with your own
+    // Open https://sct.ftqq.com/ in WeChat, login, copy SendKey
+    var SENDKEY = 'SCT386122TCUt1fC5JgmmpVt5JuVXHfWyU';
+
+    function notifyWechat(text) {
+      if (SENDKEY === 'YOUR_SENDKEY_HERE') return;
+
+      var msg = text.replace(/\\n/g, '\n').replace(/[【】预约信息]/, '');
+      var desp = '预约详情:\n\n' + msg + '\n\n' + new Date().toLocaleString('zh-CN');
+
+      // 用隐藏表单POST提交，完全绕过浏览器跨域限制
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://sctapi.ftqq.com/' + SENDKEY + '.send';
+      form.target = 'pushFrame';
+      form.style.display = 'none';
+
+      var t = document.createElement('input'); t.name = 'title'; t.value = '有新客户预约包车！'; form.appendChild(t);
+      var d = document.createElement('input'); d.name = 'desp'; d.value = desp; form.appendChild(d);
+
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+    }
+
+    // Tab switching
+    const tabItems = document.querySelectorAll('.tab-item');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function switchTab(index) {
+      // Update tabs
+      tabItems.forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+      });
+      // Update content
+      tabContents.forEach((c, i) => {
+        c.classList.toggle('active', parseInt(c.dataset.tab) === index);
+      });
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    tabItems.forEach(item => {
+      item.addEventListener('click', () => {
+        switchTab(parseInt(item.dataset.tab));
+      });
+    });
+
+    // Pricing tag toggle (Tab3)
+    document.querySelectorAll('#priceTags .price-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        document.querySelectorAll('#priceTags .price-tag').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Booking type toggle (Tab4)
+    document.querySelectorAll('#bookingType .form-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        document.querySelectorAll('#bookingType .form-option').forEach(o => o.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('billType').value = this.dataset.type;
+      });
+    });
+
+    // Form submission → 预约确认弹窗
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // 收集表单数据
+      var from = this.querySelector('input[value]').value || '杭州市';
+      var to = this.querySelectorAll('input[type="text"]')[1].value;
+      var date = this.querySelector('input[type="date"]').value;
+      var time = this.querySelector('input[type="time"]').value;
+      var people = this.querySelector('select').value;
+      var billType = document.getElementById('billType').value;
+      var name = this.querySelectorAll('input[type="text"]')[2].value;
+      var phone = this.querySelector('input[type="tel"]').value;
+      var note = this.querySelector('textarea').value || '无';
+      var billMap = { hour: '按小时租', half: '半日租(4h)', full: '全日租(8h)' };
+
+      // 生成预约信息
+      var text = '【预约信息】\\n';
+      text += '姓名：' + name + '\\n';
+      text += '电话：' + phone + '\\n';
+      text += '出发地：' + from + '\\n';
+      text += '目的地：' + to + '\\n';
+      text += '用车时间：' + date + ' ' + time + '\\n';
+      text += '乘车人数：' + people + '\\n';
+      text += '计费方式：' + billMap[billType] + '\\n';
+      text += '备注：' + note;
+
+      // 显示确认弹窗
+      document.getElementById('confirmModal').style.display = 'flex';
+      document.getElementById('confirmSummary').innerText = text;
+      document.getElementById('confirmModal').dataset.text = encodeURIComponent(text);
+
+      // 推送到王师傅微信
+      notifyWechat(text);
+    });
+
+    // 关闭弹窗
+    function closeConfirm() {
+      document.getElementById('confirmModal').style.display = 'none';
+    }
+
+    // 发送给王师傅微信
+    function sendToWechat() {
+      var text = decodeURIComponent(document.getElementById('confirmModal').dataset.text);
+      // 尝试打开微信，如果不行就复制
+      navigator.clipboard.writeText(text).then(function() {
+        showToast('预约信息已复制，请打开微信粘贴给王师傅');
+      });
+      // 尝试跳转微信
+      window.location.href = 'weixin://';
+    }
+
+    // Copy WeChat
+    function copyWechat() {
+      navigator.clipboard.writeText('wjj13588763992').then(() => {
+        showToast('微信号已复制：wjj13588763992');
+      }).catch(() => {
+        // Fallback for older browsers
+        const input = document.createElement('input');
+        input.value = 'wjj13588763992';
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        showToast('微信号已复制：wjj13588763992');
+      });
+    }
+
+    // Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+  </script>
+</body>
+</html>
