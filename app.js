@@ -35,3 +35,19 @@ document.querySelector('#copy-wechat').addEventListener('click',async()=>{
   try{await navigator.clipboard.writeText('wjj13588763992');status.textContent='微信号已复制，请在微信搜索添加，再发送询价清单。';}
   catch{status.textContent='自动复制不可用，请手动复制微信号：wjj13588763992';}
 });
+
+const routeExamples={
+  airport:{service:'接站＋半日接待',origin:'杭州萧山国际机场',stops:'公司会议（请补充地址与停留时间）→ 酒店（请补充地址）'},
+  suzhou:{service:'跨城 / 多日商务',origin:'杭州',destination:'杭州（往返）',stops:'苏州客户公司 / 工厂（请补充地址与停留时间）'},
+  overnight:{service:'跨城 / 多日商务',origin:'杭州',overnight:'需要过夜'}
+};
+document.querySelectorAll('[data-route]').forEach(link=>link.addEventListener('click',()=>{
+  const example=routeExamples[link.dataset.route];
+  form.elements.service.value=example.service;
+  for(const name of ['origin','destination','stops']){
+    if(example[name]&&(!form.elements[name].value.trim()||(name==='origin'&&form.elements[name].value==='杭州'))) form.elements[name].value=example[name];
+  }
+  if(example.overnight) form.elements.overnight.value=example.overnight;
+  result.hidden=true;copyStatus.textContent='';warning();
+  document.querySelector('#route-status').textContent='已选择示例；保留已填写地点，请在询价表核对路线并补充实际地址和时间。';
+}));
