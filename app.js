@@ -22,7 +22,7 @@ form.addEventListener('submit',event=>{
   }
   if(new Date(d.end)<=new Date(d.start)){hint.hidden=false;hint.textContent='预计结束时间必须晚于开始时间，可选择次日或更晚日期。';form.elements.end.focus();return;}
   warning();
-  summary.value=['【商务用车询价清单｜尚未确认预约】',`类型：${d.service}`,`开始：${d.start.replace('T',' ')}`,`结束：${d.end.replace('T',' ')}`,`路线：${d.origin.trim()} → ${d.destination.trim()}`,`途经与停留：${d.stops.trim()}`,`人数：${d.people}`,`行李：${d.luggage.trim()}`,`过夜：${d.overnight}`,`发票：${d.invoice}（目前暂不能开票）`,`其他：${d.notes.trim()||'无'}`,'请核实承接范围、档期及完整费用。双方确认行程、报价和预约规则后安排用车。'].join('\n');
+  summary.value=['【王师傅尊享出行｜用车询价清单｜尚未确认预约】',`类型：${d.service}`,`开始：${d.start.replace('T',' ')}`,`结束：${d.end.replace('T',' ')}`,`路线：${d.origin.trim()} → ${d.destination.trim()}`,`途经与停留：${d.stops.trim()}`,`人数：${d.people}`,`行李：${d.luggage.trim()}`,`过夜：${d.overnight}`,`发票：${d.invoice}（目前暂不能开票）`,`其他：${d.notes.trim()||'无'}`,'请核实承接范围、档期及完整费用。双方确认行程、报价和预约规则后安排用车。'].join('\n');
   result.hidden=false;copyStatus.textContent='清单已生成，尚未发送。请复制到当前咨询聊天中发送。';
 });
 document.querySelector('#copy').addEventListener('click',async()=>{
@@ -37,6 +37,7 @@ document.querySelector('#copy-wechat').addEventListener('click',async()=>{
 });
 
 const routeExamples={
+  tourism:{service:'周边游包车（一日 / 多日）',origin:'杭州',overnight:'需要过夜'},
   airport:{service:'接站＋半日接待',origin:'杭州萧山国际机场',stops:'公司会议（请补充地址与停留时间）→ 酒店（请补充地址）'},
   suzhou:{service:'跨城 / 多日商务',origin:'杭州',destination:'杭州（往返）',stops:'苏州客户公司 / 工厂（请补充地址与停留时间）'},
   overnight:{service:'跨城 / 多日商务',origin:'杭州',overnight:'需要过夜'}
